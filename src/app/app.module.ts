@@ -7,6 +7,7 @@ import { FaqComponent } from './faq/faq.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MyBracketsComponent } from './my-brackets/my-brackets.component';
 import { MessagesComponent } from './messages/messages.component';
+import { BracketTypeComponent } from './bracket-type/bracket-type.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { MessagesComponent } from './messages/messages.component';
     DashboardComponent,
     MyBracketsComponent,
     MessagesComponent,
+    BracketTypeComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

@@ -1,0 +1,33 @@
+#bracket-page {
+ display: flex;
+ justify-content: center;
+}
+
+#form{
+ display: flex;
+ width: fit-content;
+ flex-direction: column;
+ align-items: flex-start;
+ padding: 20px;
+ margin: 20px;
+ background-color: #87CEEB;
+ border: #63b1cf solid 5px;
+}
+a {
+ color: blue;
+ width: fit-content;
+}
+button{
+ width: fit-content;
+ background-color: white;
+}
+#teamNumInput, #formats {
+ display: flex;
+ flex-direction: column;
+ width: fit-content;
+}
+
+.error {
+ color: red;
+ font-weight:bold;
+}

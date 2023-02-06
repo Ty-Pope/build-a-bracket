@@ -10,6 +10,12 @@
  width: fit-content;
 }
 
+#menu {
+ background-color: #63b1cf;
+ padding-top: 10px;
+ padding-bottom: 10px;
+}
+
 #logo img {
  padding-left: 15px;
  width: 150px;
