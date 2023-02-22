@@ -1,0 +1,107 @@
+#bracket-page {
+  display: flex;
+  justify-content: center;
+}
+
+h2 {
+ margin: 0px;
+}
+p {
+  margin-bottom: 0px;
+}
+
+p:empty {
+  display: none;
+}
+
+#format-number {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.form {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  margin: 20px;
+  background-color: #87ceeb;
+  border: #63b1cf solid 5px;
+}
+a {
+  color: blue;
+  width: fit-content;
+}
+
+button {
+  width: fit-content;
+  background-color: white;
+}
+
+#first-continue {
+  display: flex;
+  justify-content: flex-end;
+  width: 298px;
+}
+
+#teamNumInput,
+.formats {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.formats a {
+  margin-bottom: 16px;
+}
+
+label {
+  margin-bottom: 8px;
+}
+
+.formats select {
+  width: 298px;
+  margin-bottom: 16px;
+}
+
+#error-winner {
+  color: red;
+  font-weight: bold;
+  margin-top: 0px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.button-travel {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.form h3 {
+ margin: 0px;
+}
+
+#nameParent {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 16px;
+}
+
+#teamNameDiv {
+ display: flex;
+ flex-direction: column;
+ width: fit-content;
+ margin-top: 8px;
+ margin-bottom: 8px;
+}
+#teamNameDiv input{
+ width: max-content;
+}
+
