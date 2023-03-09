@@ -1,149 +1,120 @@
 <div id="bracket-page">
-  <div class="form">
-    <h2>Your Bracket</h2>
-    <p *ngIf="formatJSON.teamAmount != 0">
-      Number of teams: {{ formatJSON.teamAmount }}
-    </p>
-    <p *ngIf="formatJSON.teamAmount != 0">
-      Number of formats: {{ formatJSON.formatAmount }}
-    </p>
-    <p
-      *ngIf="
-        formatJSON.format[0] && formatJSON.format[0] != formatJSON.format[1]
-      "
-    >
-      Format(s): {{ formatJSON.format[0] }}, {{ formatJSON.format[1] }}
-    </p>
-    <p *ngIf="formatJSON.roundTwo > 0">
-      Teams Moving On: {{ formatJSON.roundTwo }}
-    </p>
+ <div class="form">
+  <h2>Your Bracket</h2>
+  <p *ngIf="formatJSON.teamAmount != 0">
+   Number of teams: {{ formatJSON.teamAmount }}
+  </p>
+  <p *ngIf="formatJSON.teamAmount != 0">
+   Number of formats: {{ formatJSON.formatAmount }}
+  </p>
+  <p *ngIf="formatJSON.format[0] && formatJSON.format[0] != formatJSON.format[1]">
+   Format(s): {{ formatJSON.format[0] }}, {{ formatJSON.format[1] }}
+  </p>
+  <p *ngIf="formatJSON.roundTwo > 0">
+   Teams Moving On: {{ formatJSON.roundTwo }}
+  </p>
+ </div>
+ <div class="form" *ngIf="visibleArr[0]">
+  <div id="teamNumInput">
+   <label for="amount">How many teams are competing?</label>
+   <input id="amount" #teamNumber type="number" name="teamNum" value="{{ formatJSON.teamAmount }}"
+    onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />
+   <p class="error">{{ numberError }}</p>
   </div>
-  <div class="form" *ngIf="visibleArr[0]">
-    <div id="teamNumInput">
-      <label for="teamNumber">How many teams are competing?</label>
-      <input
-        #teamNumber
-        type="number"
-        name="teamNum"
-        value="{{ formatJSON.teamAmount }}"
-      />
-      <p class="error">{{ numberError }}</p>
-    </div>
-    <div id="format-number">
-      <label for="formatAmount">How many stages would you like to use?</label>
-      <select #formatAmount value="{{ formatJSON.formatAmount }}">
-        <option>1</option>
-        <option>2</option>
-      </select>
-    </div>
-    <div id="first-continue">
-      <button (click)="teamNum(teamNumber.value, formatAmount.value)">
-        Continue
-      </button>
-    </div>
+  <div id="format-number">
+   <label for="formatAmount">How many stages would you like to use?</label>
+   <select #formatAmount value="{{ formatJSON.formatAmount }}">
+    <option>1</option>
+    <option>2</option>
+   </select>
   </div>
-  <div class="form" *ngIf="visibleArr[1]">
-    <div class="formats" *ngIf="numVisible[0]">
-      <a href="/bracket-type" target="_blank">Bracket Types</a>
-      <label for="firstFormatType"
-        >What is the first format you would like to use?</label
-      >
-      <select
-        #firstFormatType
-        (change)="formatChange(0, firstFormatType.value)"
-        value="{{ formatJSON.format[0] }}"
-      >
-        <option>Swiss</option>
-        <option>Group</option>
-        <option>Round Robin</option>
-        <option>Single Elimination</option>
-        <option>Double Elimination</option>
-      </select>
-    </div>
-    <div class="formats" *ngIf="numVisible[1]">
-      <label for="twoFormatType"
-        >What is the second format you would like to use?</label
-      >
-      <select
-        #twoFormatType
-        (change)="formatChange(1, twoFormatType.value)"
-        value="{{ formatJSON.format[1] }}"
-      >
-        <option>Swiss</option>
-        <option>Group</option>
-        <option>Round Robin</option>
-        <option>Single Elimination</option>
-        <option>Double Elimination</option>
-      </select>
-      <p id="error-winner">{{ winnerBracket }}</p>
-    </div>
-    <!--This is for if I want to make a third bracket option-->
-    <div class="formats" *ngIf="numVisible[2]">
-      <label for="thirdFormatType"
-        >What is the final format you would like to use?</label
-      >
-      <select
-        #thirdFormatType
-        (change)="formatChange(2, thirdFormatType.value)"
-      >
-        <option>Swiss</option>
-        <option>Group</option>
-        <option>Round Robin</option>
-        <option>Single Elimination</option>
-        <option>Double Elimination</option>
-      </select>
-    </div>
-    <div class="button-travel">
-      <button (click)="back(1)">Back</button>
-      <button (click)="formatButton()">Continue</button>
-    </div>
+  <div id="first-continue">
+   <button (click)="teamNum(teamNumber.value, formatAmount.value)">Continue</button>
   </div>
-  <div class="form" *ngIf="visibleArr[2]">
-    <label for="teamMove"
-      >How many teams should make it out of the first bracket?</label
-    >
-    <input
-      #teamMove
-      type="number"
-      name="teamAmount"
-      value="{{ formatJSON.roundTwo }}"
-    />
-    <p class="error">{{ moveOnError }}</p>
-    <div class="button-travel">
-      <button (click)="back(2)">Back</button>
-      <button (click)="movement(teamMove.value)">Continue</button>
-    </div>
+ </div>
+ <div class="form" *ngIf="visibleArr[1]">
+  <div class="formats" *ngIf="numVisible[0]">
+   <a href="/bracket-type" target="_blank">Bracket Types</a>
+   <label for="firstFormatType">What is the first format you would like to use?</label>
+   <select #firstFormatType (change)="formatChange(0, firstFormatType.value)" value="{{ formatJSON.format[0] }}">
+    <option>Swiss</option>
+    <option>Group</option>
+    <option>Round Robin</option>
+    <option>Single Elimination</option>
+    <option>Double Elimination</option>
+   </select>
   </div>
-  <div class="form" *ngIf="visibleArr[3]">
-    <div *ngFor="let team of teams; let i = index">
-      <table>
-        <tr>
-          <th>Name</th>
-          <th>Seed</th>
-        </tr>
-        <tr>
-          <th>
-            <input
-              type="text"
-              [(ngModel)]="team.name"
-              (ngModelChange)="teamName(team.name, i)"
-            />
-          </th>
-          <th>
-            <input
-              type="number"
-              value="{{ team.seed }}"
-              [(ngModel)]="team.seed"
-              (ngModelChange)="teamSead(team.seed, i)"
-            />
-          </th>
-        </tr>
-      </table>
-    </div>
-    <p class="error">{{ teamNameError }}</p>
-    <div class="button-travel">
-      <button (click)="back(3)">Back</button>
-      <button (click)="bracketCreate()">Continue</button>
-    </div>
+  <div class="formats" *ngIf="numVisible[1]">
+   <label for="twoFormatType">What is the second format you would like to use?</label>
+   <select #twoFormatType (change)="formatChange(1, twoFormatType.value)" value="{{ formatJSON.format[1] }}">
+    <option>Swiss</option>
+    <option>Group</option>
+    <option>Round Robin</option>
+    <option>Single Elimination</option>
+    <option>Double Elimination</option>
+   </select>
   </div>
+  <p id="error-winner">{{ winnerBracket }}</p>
+  <!--This is for if I want to make a third bracket option-->
+  <div class="formats" *ngIf="numVisible[2]">
+   <label for="thirdFormatType">What is the final format you would like to use?</label>
+   <select #thirdFormatType (change)="formatChange(2, thirdFormatType.value)">
+    <option>Swiss</option>
+    <option>Group</option>
+    <option>Round Robin</option>
+    <option>Single Elimination</option>
+    <option>Double Elimination</option>
+   </select>
+  </div>
+  <div class="button-travel">
+   <button (click)="back(1)">Back</button>
+   <button (click)="formatButton()">Continue</button>
+  </div>
+ </div>
+ <div class="form" *ngIf="visibleArr[2]">
+  <label for="teamMove">How many teams should make it out of the first bracket?</label>
+  <input #teamMove type="number" name="teamAmount" value="{{ formatJSON.roundTwo }}"
+   onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />
+  <p class="error">{{ moveOnError }}</p>
+  <div class="button-travel">
+   <button (click)="back(2)">Back</button>
+   <button (click)="movement(teamMove.value)">Continue</button>
+  </div>
+ </div>
+ <div class="form" *ngIf="visibleArr[3]">
+  <div *ngFor="let team of teams; let i = index">
+   <table>
+    <tr>
+     <th>Name</th>
+     <th>Seed</th>
+    </tr>
+    <tr>
+     <th>
+      <input type="text" [(ngModel)]="team.name" (ngModelChange)="teamName(team.name, i)" />
+     </th>
+     <th>
+      <p>{{teams[i].seed}}</p>
+     </th>
+    </tr>
+   </table>
+  </div>
+  <p class="error">{{ teamNameError }}</p>
+  <div class="button-travel">
+   <button (click)="back(3)">Back</button>
+   <button (click)="bracketCreate()">Continue</button>
+  </div>
+ </div>
+ <div class="form" *ngIf="visibleArr[4]">
+  <label for="groupAmount">How many groups would you like?</label>
+  <input #groupAmount type="number" value="{{ formatJSON.group }}" />
+  <p class="error">{{ groupError }}</p>
+  <div class="button-travel">
+   <button (click)="back(4)">Back</button>
+   <button (click)="groupStage(+groupAmount.value)">Continue</button>
+  </div>
+ </div>
+ <div class="form" *ngIf="visibleArr[5]">
+  <p>Bracket Created!</p>
+  <p>Edit it <a routerLink="/edit-bracket/{{0}}">here!</a></p>
+ </div>
 </div>

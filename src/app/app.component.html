@@ -1,17 +1,35 @@
-<div id="logo">
+<div id="menu-logo">
+ <div id="logo">
   <a routerLink="">
-    <h1>Build-A-Bracket</h1>
-    <img src="assets/build-logo.png" alt="a bracket" />
+   <h1>Build-A-Bracket</h1>
+   <img src="assets/build-logo.png" alt="a bracket" />
   </a>
+ </div>
+ <input type="checkbox" class="burger-shower" id="hamburger-input" (change)="true" #checkBox />
+ <label id="hamburger-img" for="hamburger-input"><img src="assets/Hamburger_icon.png" alt="" />
+  <nav id="sidebar-menu" *ngIf="checkBox.checked">
+   <h3>Menu</h3>
+   <ul>
+    <li><a routerLink="">Home</a></li>
+    <li><a routerLink="faq">FAQ</a></li>
+    <li><a routerLink="my-brackets">My Brackets</a></li>
+    <li><a routerLink="create-bracket">Create Bracket</a></li>
+    <li><a routerLink="bracket-type">Bracket Types</a></li>
+   </ul>
+  </nav>
+ </label>
 </div>
 <div id="menu">
-  <nav>
-    <a routerLink="">Home</a>
-    <a routerLink="faq">FAQ</a>
-    <a routerLink="my-brackets">My Brackets</a>
-    <a routerLink="create-bracket">Create Bracket</a>
-    <a routerLink="bracket-type">Bracket Types</a>
-  </nav>
+ <nav id="main-menu">
+  <ul>
+   <li><a routerLink="">Home</a></li>
+   <li><a routerLink="faq">FAQ</a></li>
+   <li><a routerLink="my-brackets">My Brackets</a></li>
+   <li><a routerLink="create-bracket">Create Bracket</a></li>
+   <li><a routerLink="bracket-type">Bracket Types</a></li>
+  </ul>
+ </nav>
 </div>
 <router-outlet></router-outlet>
 <app-messages></app-messages>
+<app-bracket-edit></app-bracket-edit>

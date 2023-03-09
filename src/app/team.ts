@@ -3,6 +3,6 @@ export interface Team {
  name: string,
  seed: number,
  eliminated: boolean,
- wins: number,
- losses: number,
+ groupOne: {},
+ groupTwo: {},
 }

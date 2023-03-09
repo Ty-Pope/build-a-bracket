@@ -1,6 +1,13 @@
 #bracket-page {
   display: flex;
   justify-content: center;
+  flex-direction: row;
+}
+@media only screen and (max-width: 530px) {
+ #bracket-page {
+  flex-direction: column;
+ }
+ 
 }
 
 h2 {
@@ -105,3 +112,6 @@ label {
  width: max-content;
 }
 
+tr p {
+ margin: 0px;
+}

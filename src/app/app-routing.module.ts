@@ -7,6 +7,7 @@ import { FaqComponent } from './faq/faq.component';
 import { MyBracketsComponent } from './my-brackets/my-brackets.component';
 import { CreateBracketComponent } from './create-bracket/create-bracket.component';
 import { NoPageComponent } from './no-page/no-page.component';
+import { BracketEditComponent } from './bracket-edit/bracket-edit.component';
 
 const routes: Routes = [
  { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
@@ -15,6 +16,7 @@ const routes: Routes = [
  { path: 'my-brackets', component: MyBracketsComponent},
  { path: 'create-bracket', component: CreateBracketComponent},
  { path: 'bracket-type', component: BracketTypeComponent},
+ { path: 'edit-bracket/:id', component: BracketEditComponent},
  { path: '**', component: NoPageComponent}
 ];
 
