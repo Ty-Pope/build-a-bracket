@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../message.service';
-import { Team } from '../team';
-import { Match } from '../match';
 import { BracketDataService } from '../bracket-data.service';
+import { BracketData } from '../bracket-data';
 
 @Component({
  selector: 'app-bracket-edit',
@@ -15,6 +14,6 @@ export class BracketEditComponent implements OnInit {
 
  ngOnInit(): void {
  }
- bracket: Match[][] = this.bracketData.getMatch();
-
+ public bracket: BracketData = this.bracketData.getMatch();
+ public bracketString: string = JSON.stringify(this.bracket);
 }

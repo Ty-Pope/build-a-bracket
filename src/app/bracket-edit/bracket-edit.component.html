@@ -1,4 +1,66 @@
-<div class="match" *ngFor="let team of bracket">
- <p>{{team[0].team1?.name}}</p>
- <p>{{team[0].team2?.name}}</p>
+<!--Single Elimination-->
+<div class="elim-main" *ngIf="bracket.format[0] == 'Single Elimination'">
+ <div class="rounds" *ngFor="let round of bracket.roundOne; let i = index">
+  <h1>Round {{i+1}}</h1>
+  <div class="matches" *ngFor="let match of round">
+   <div class="box" *ngIf="match.team1?.name !== 'qwertyasdfghzxcvbn$123'">
+    <p class="seed">{{match.team1?.seed}}</p>
+    <p>{{match.team1?.name}}</p>
+    <p *ngIf="match.team2?.name == null">Waiting on winner...</p>
+   </div>
+   <div class="box" *ngIf="match.team2?.name !== 'qwertyasdfghzxcvbn$123'">
+    <p class="seed">{{match.team2?.seed}}</p>
+    <p>{{match.team2?.name}}</p>
+    <p *ngIf="match.team2?.name == null">Waiting on winner...</p>
+   </div>
+  </div>
+ </div>
+</div>
+<!--Double Elimination-->
+<div class="elim-main" *ngIf="bracket.format[0] == 'Double Elimination'">
+ <p>{{bracketString}}</p>
+ <div class="rounds" *ngFor="let round of bracket.roundOne; let i = index">
+  <h1>Round {{i+1}}</h1>
+ </div>
+</div>
+
+<!--Groups-->
+<div class="group-main" *ngIf="bracket.format[0] == 'Group'">
+ <h2>Groups</h2>
+ <div id="table">
+  <div class="column" *ngFor="let column of bracket.roundOne; let i = index">
+   <h3>Group {{i + 1}}</h3>
+   <div id="teams">
+    <div *ngFor="let team of bracket.roundOne[i]">
+     <p class="team-individual">{{bracket.team[team - 1].name}}</p>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div id="group-matches">
+  <div id="matches-table" *ngFor="let group of bracket.groupMatches; let j = index">
+   <h3>Group {{j + 1}} Matches</h3>
+   <div id="round-matches" *ngFor="let match of group">
+    <p>{{bracket.team[match.team1 - 1].name}} vs {{bracket.team[match.team2 - 1].name}}</p>
+   </div>
+  </div>
+ </div>
+</div>
+<!--Round Robin-->
+<div class="group-main" *ngIf="bracket.format[0] == 'Round Robin'">
+ <div id="robin-head">
+  <div class="robin-id">
+   <div id="blank-space"></div>
+  </div>
+  <div class="robin-id" *ngFor="let team of bracket.team; let k = index">
+   {{k+1}}
+  </div>
+ </div>
+ <div id="robin-table" *ngFor="let team of bracket.roundOne; let i = index">
+  <div id="robin-team">{{i+1}}</div>
+  <div class="robin-match" *ngFor="let team of bracket.roundOne; let j = index">
+   <div *ngIf="i == j">x</div>
+   <div *ngIf="i != j">0-0</div>
+  </div>
+ </div>
 </div>

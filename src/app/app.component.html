@@ -1,10 +1,4 @@
 <div id="menu-logo">
- <div id="logo">
-  <a routerLink="">
-   <h1>Build-A-Bracket</h1>
-   <img src="assets/build-logo.png" alt="a bracket" />
-  </a>
- </div>
  <input type="checkbox" class="burger-shower" id="hamburger-input" (change)="true" #checkBox />
  <label id="hamburger-img" for="hamburger-input"><img src="assets/Hamburger_icon.png" alt="" />
   <nav id="sidebar-menu" *ngIf="checkBox.checked">
@@ -18,6 +12,12 @@
    </ul>
   </nav>
  </label>
+ <div id="logo">
+  <a routerLink="">
+   <h1>Build-A-Bracket</h1>
+   <img src="assets/build-logo.png" alt="a bracket" />
+  </a>
+ </div>
 </div>
 <div id="menu">
  <nav id="main-menu">
@@ -32,4 +32,3 @@
 </div>
 <router-outlet></router-outlet>
 <app-messages></app-messages>
-<app-bracket-edit></app-bracket-edit>

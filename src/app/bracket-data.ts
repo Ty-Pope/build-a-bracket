@@ -1,3 +1,4 @@
+import { Match } from "./match";
 import { Team } from "./team";
 /**
  * teamAmount (number): the amount of teams in the bracket
@@ -14,6 +15,7 @@ export interface BracketData {
  format: Array<String>,
  amountRoundTwo: number,
  group: number,
- roundOne: {},
- roundTwo: {},
+ groupMatches: Array<any>,
+ roundOne: Array<any>,
+ roundTwo: Array<any>,
 }

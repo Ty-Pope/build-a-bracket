@@ -29,6 +29,7 @@ export class CreateBracketComponent implements OnInit {
   format: ['Swiss', 'Swiss'],
   amountRoundTwo: 0,
   group: 0,
+  groupMatches: this.match,
   roundOne: this.match,
   roundTwo: this.match,
  };
@@ -170,7 +171,8 @@ export class CreateBracketComponent implements OnInit {
    } else {
     let match = this.bracketLogic.createBracket(this.formatJSON);
     this.formatJSON.roundOne = match;
-    this.bracketData.updateMatch(match);
+    console.log(JSON.stringify(this.formatJSON));
+    this.bracketData.updateBracket(this.formatJSON);
     this.visibleArr[3] = false;
     this.visibleArr[5] = true;
    }
@@ -190,7 +192,25 @@ export class CreateBracketComponent implements OnInit {
  groupStage(groupAmount: number) {
   if (this.formatJSON.teamAmount % groupAmount == 0) {
    this.formatJSON.group = groupAmount;
-   this.messageService.add(JSON.stringify(this.bracketLogic.createBracket(this.formatJSON)));
+   this.formatJSON.roundOne = this.bracketLogic.createBracket(this.formatJSON);
+
+   //Creates the matches of the groups.
+   var matches: Match[][] = [];
+   let round: Match[] = [];
+
+   for (let k = 0; k < this.formatJSON.roundOne.length; k++) {
+    for (let i = 0; i < this.formatJSON.roundOne[k].length; i++) {
+     for (let j = i + 1; j < this.formatJSON.roundOne[k].length; j++) {
+      round.push({ team1: this.formatJSON.roundOne[k][i], team2: this.formatJSON.roundOne[k][j] });
+     }
+    }
+    matches.push(round);
+    round = [];
+   }
+   this.formatJSON.groupMatches = matches;
+   console.log(JSON.stringify(this.formatJSON));
+   //Updates data of bracket
+   this.bracketData.updateBracket(this.formatJSON);
    this.visibleArr[4] = false;
    this.visibleArr[5] = true;
   } else if (this.formatJSON.teamAmount <= groupAmount) {

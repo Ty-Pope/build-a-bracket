@@ -47,6 +47,11 @@ nav {
  justify-content: space-between;
 }
 
+#hamburger-input:checked+#menu-logo {
+ background-color: purple;
+ justify-content: end;
+}
+
 a {
  color: black;
  text-decoration: none;

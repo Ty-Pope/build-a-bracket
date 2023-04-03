@@ -1,11 +1,126 @@
-.match {
- display: flex;
- width: fit-content;
- height: fit-content;
+h2 {
+ text-align: center;
+}
+
+p {
+ padding: 3px;
+ margin: 0px;
+}
+
+.rounds {
+ display: inline-flex;
  flex-direction: column;
  align-items: center;
- padding: 10px;
- margin: 10px;
+}
+
+.matches {
+ display: flex;
+ flex-direction: column;
  background-color: #87ceeb;
- border: black solid 1px;
+ margin: 10px;
+ width: 200px;
+}
+
+.box {
+ display: flex;
+ border: 1px solid black;
+}
+
+.seed {
+ width: 24px;
+ border-right: 1px solid black;
+}
+
+.group-main {
+ margin: 20px;
+ border: 5px #63b1cf solid;
+ background-color: #87CEEB;
+}
+
+#table {
+ display: flex;
+ justify-content: space-around;
+ margin: 10px;
+ flex-wrap: wrap;
+}
+
+.column {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+
+#teams {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ border-left: 1px solid black;
+ border-right: 1px solid black;
+ border-bottom: 1px solid black;
+}
+
+.team-individual {
+ text-align: center;
+ border-top: 1px solid black;
+ width: 200px;
+}
+
+#group-matches {
+ display: flex;
+ flex-direction: row;
+ flex-wrap: wrap;
+ text-align: center;
+ justify-content: space-around;
+ margin: 12px;
+}
+
+#round-matches {
+ border: 1px solid black;
+}
+
+#round-matches p {
+ text-align: center;
+}
+
+#robin-head {
+ width: fit-content;
+ border-left: 1px solid black;
+ border-top: 1px solid black;
+ border-bottom: 1px solid black;
+ display: flex;
+ flex-direction: row;
+}
+
+.robin-id {
+ width: 22px;
+ text-align: center;
+ border-right: 1px solid black;
+ padding: 5px;
+}
+
+#blank-space {
+ width: 22px;
+ padding: 5px;
+ color: #87CEEB;
+}
+
+#robin-table {
+ width: fit-content;
+ display: flex;
+ border-left: 1px solid black;
+ border-bottom: 1px solid black;
+}
+
+#robin-team {
+ width: 22px;
+ text-align: center;
+ border-right: 1px solid black;
+ padding: 5px;
+}
+
+.robin-match {
+ width: 22px;
+ text-align: center;
+ padding: 5px;
+ border-right: 1px solid black;
 }

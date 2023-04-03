@@ -10,8 +10,8 @@
   <p *ngIf="formatJSON.format[0] && formatJSON.format[0] != formatJSON.format[1]">
    Format(s): {{ formatJSON.format[0] }}, {{ formatJSON.format[1] }}
   </p>
-  <p *ngIf="formatJSON.roundTwo > 0">
-   Teams Moving On: {{ formatJSON.roundTwo }}
+  <p *ngIf="formatJSON.amountRoundTwo > 0">
+   Teams Moving On: {{ formatJSON.amountRoundTwo }}
   </p>
  </div>
  <div class="form" *ngIf="visibleArr[0]">
@@ -90,7 +90,7 @@
     </tr>
     <tr>
      <th>
-      <input type="text" [(ngModel)]="team.name" (ngModelChange)="teamName(team.name, i)" />
+      <input type="text" [(ngModel)]="team.name" (ngModelChange)="teamName(team.name, i)" maxlength="25" />
      </th>
      <th>
       <p>{{teams[i].seed}}</p>

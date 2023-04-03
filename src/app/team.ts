@@ -1,8 +1,8 @@
 export interface Team {
  id: number,
  name: string,
- seed: number,
- eliminated: boolean,
- groupOne: {},
- groupTwo: {},
+ seed?: number,
+ eliminated?: boolean,
+ groupOne?: {},
+ groupTwo?: {},
 }
