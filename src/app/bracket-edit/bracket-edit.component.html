@@ -26,13 +26,23 @@
 
 <!--Groups-->
 <div class="group-main" *ngIf="bracket.format[0] == 'Group'">
+ <p>{{bracketString}}</p>
  <h2>Groups</h2>
  <div id="table">
   <div class="column" *ngFor="let column of bracket.roundOne; let i = index">
    <h3>Group {{i + 1}}</h3>
    <div id="teams">
-    <div *ngFor="let team of bracket.roundOne[i]">
+    <div class="group-header">
+     <p class="team-individual">Name</p>
+     <p class="group-score">W</p>
+     <p class="group-score">L</p>
+     <p class="group-score">T</p>
+    </div>
+    <div class="group-team" *ngFor="let team of bracket.roundOne[i]">
      <p class="team-individual">{{bracket.team[team - 1].name}}</p>
+     <p class="team-score">{{bracket.team[team - 1].wins}}</p>
+     <p class="team-score">{{bracket.team[team - 1].loss}}</p>
+     <p class="team-score">{{bracket.team[team - 1].tie}}</p>
     </div>
    </div>
   </div>
@@ -40,27 +50,59 @@
  <div id="group-matches">
   <div id="matches-table" *ngFor="let group of bracket.groupMatches; let j = index">
    <h3>Group {{j + 1}} Matches</h3>
-   <div id="round-matches" *ngFor="let match of group">
-    <p>{{bracket.team[match.team1 - 1].name}} vs {{bracket.team[match.team2 - 1].name}}</p>
+   <div id="round-matches" *ngFor="let match of group; let i = index">
+    <p id="group-left">{{bracket.team[match.team1 - 1].name}}</p>
+    <button class="group-input" *ngIf="!match.team1Score"
+     (click)="inputGroupScore(bracket.team[match.team1 - 1], bracket.team[match.team2 - 1], j, i)">Add
+     Score</button>
+    <div class="group-complete" *ngIf="match.team1Score">{{match.team1Score}}-{{match.team2Score}}</div>
+    <p>{{bracket.team[match.team2 - 1].name}}</p>
+   </div>
+  </div>
+ </div>
+</div>
+<div id="group-background" *ngIf="teamOne.name != ''"></div>
+<div id="group-inline" *ngIf="teamOne.name != ''">
+ <div id=" group-game">
+  <div id="group-game-child">
+   <div id="group-game-input">
+    <div class="group-label">
+     <label for="group-one">{{teamOne.name}} score: </label>
+     <input id="group-one" #groupOneScore type="number" required
+      onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+    </div>
+    <div class="group-label">
+     <label for="group-two">{{teamTwo.name}} score: </label>
+     <input id="group-two" #groupTwoScore type="number" required
+      onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+    </div>
+   </div>
+   <p id="groupError" *ngIf=" groupError">{{groupError}}</p>
+   <div id="group-buttons">
+    <button (click)="groupCancel()">Cancel</button>
+    <button (click)="groupSubmit(+groupOneScore.value, +groupTwoScore.value)">Submit</button>
    </div>
   </div>
  </div>
 </div>
 <!--Round Robin-->
 <div class="group-main" *ngIf="bracket.format[0] == 'Round Robin'">
+ <h2>Round Robin</h2>
  <div id="robin-head">
   <div class="robin-id">
    <div id="blank-space"></div>
   </div>
-  <div class="robin-id" *ngFor="let team of bracket.team; let k = index">
+  <div class="robin-id" *ngFor="let team of bracket.roundOne; let k = index">
    {{k+1}}
   </div>
  </div>
- <div id="robin-table" *ngFor="let team of bracket.roundOne; let i = index">
-  <div id="robin-team">{{i+1}}</div>
-  <div class="robin-match" *ngFor="let team of bracket.roundOne; let j = index">
-   <div *ngIf="i == j">x</div>
-   <div *ngIf="i != j">0-0</div>
+ <div id="robin-parent-table">
+  <div id="robin-table" *ngFor="let team of bracket.roundOne; let i = index">
+   <div id="robin-team">{{i+1}}</div>
+   <div class="robin-match" *ngFor="let team of bracket.roundOne; let j = index">
+    <div *ngIf="i == j">x</div>
+    <div *ngIf="i != j">0-0</div>
+   </div>
   </div>
  </div>
 </div>

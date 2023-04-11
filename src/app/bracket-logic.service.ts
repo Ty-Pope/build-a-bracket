@@ -79,8 +79,7 @@ export class BracketLogicService {
     name: `qwertyasdfghzxcvbn$123`,
     seed: data.team.length + 1,
     eliminated: false,
-    groupOne: {},
-    groupTwo: {},
+    wins: 0, loss: 0, tie: 0,
    });
   }
 
@@ -93,8 +92,7 @@ export class BracketLogicService {
     name: `qwertyasdfghzxcvbn$123`,
     seed: data.team.length + 1,
     eliminated: false,
-    groupOne: {},
-    groupTwo: {},
+    wins: 0, loss: 0, tie: 0,
    });
    divTwo = this.isPrime(data);
   }
@@ -131,8 +129,7 @@ export class BracketLogicService {
     name: `qwertyasdfghzxcvbn$123`,
     seed: data.team.length + 1,
     eliminated: false,
-    groupOne: {},
-    groupTwo: {},
+    wins: 0, loss: 0, tie: 0,
    });
   }
 
@@ -145,8 +142,7 @@ export class BracketLogicService {
     name: `qwertyasdfghzxcvbn$123`,
     seed: data.team.length + 1,
     eliminated: false,
-    groupOne: {},
-    groupTwo: {},
+    wins: 0, loss: 0, tie: 0,
    });
    divTwo = this.isPrime(data);
   }

@@ -67,6 +67,9 @@ export class CreateBracketComponent implements OnInit {
     eliminated: false,
     groupOne: [],
     groupTwo: [],
+    wins: 0,
+    loss: 0,
+    tie: 0,
    });
   }
   this.formatJSON.team = this.teams;

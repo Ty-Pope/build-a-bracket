@@ -1,8 +1,13 @@
+import { Match } from "./match";
+
 export interface Team {
  id: number,
  name: string,
  seed?: number,
  eliminated?: boolean,
- groupOne?: {},
- groupTwo?: {},
+ wins: number,
+ loss: number,
+ tie: number,
+ groupOne?: Match[],
+ groupTwo?: Match[],
 }
