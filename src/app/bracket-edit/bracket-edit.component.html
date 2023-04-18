@@ -60,6 +60,8 @@
    </div>
   </div>
  </div>
+ <button id="group-finish" *ngIf="groupFinished && bracket.formatAmount > 1 && bracket.format[1] != 'Group'">Generate
+  Next Stage</button>
 </div>
 <div id="group-background" *ngIf="teamOne.name != ''"></div>
 <div id="group-inline" *ngIf="teamOne.name != ''">
@@ -79,29 +81,31 @@
    </div>
    <p id="groupError" *ngIf=" groupError">{{groupError}}</p>
    <div id="group-buttons">
-    <button (click)="groupCancel()">Cancel</button>
-    <button (click)="groupSubmit(+groupOneScore.value, +groupTwoScore.value)">Submit</button>
+    <button (click)="cancel()">Cancel</button>
+    <button (click)="submit(+groupOneScore.value, +groupTwoScore.value)">Submit</button>
    </div>
   </div>
  </div>
 </div>
 <!--Round Robin-->
+<p>{{bracketString}}</p>
 <div class="group-main" *ngIf="bracket.format[0] == 'Round Robin'">
  <h2>Round Robin</h2>
  <div id="robin-head">
   <div class="robin-id">
-   <div id="blank-space"></div>
   </div>
   <div class="robin-id" *ngFor="let team of bracket.roundOne; let k = index">
    {{k+1}}
   </div>
  </div>
  <div id="robin-parent-table">
-  <div id="robin-table" *ngFor="let team of bracket.roundOne; let i = index">
+  <div id="robin-table" *ngFor="let matches of bracket.roundOne; let i = index">
    <div id="robin-team">{{i+1}}</div>
    <div class="robin-match" *ngFor="let team of bracket.roundOne; let j = index">
-    <div *ngIf="i == j">x</div>
-    <div *ngIf="i != j">0-0</div>
+    <div *ngIf="i == j">{{team[11]}}</div>
+    <div *ngIf="i != j">
+     <button *ngIf="team[i].team1.name" class=" robin-button" (click)="inputRobinScore(i, j)">0-0</button>
+    </div>
    </div>
   </div>
  </div>

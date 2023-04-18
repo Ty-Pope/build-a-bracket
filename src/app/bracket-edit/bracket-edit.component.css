@@ -40,6 +40,11 @@ p {
  background-color: #87CEEB;
 }
 
+.group-main {
+ overflow: auto;
+ white-space: nowrap;
+}
+
 .group-team {
  display: flex;
 }
@@ -163,6 +168,11 @@ p {
  margin: 12px;
 }
 
+#group-finish {
+ margin: 16px;
+ background-color: white;
+}
+
 #round-matches {
  display: flex;
  justify-content: center;
@@ -204,14 +214,14 @@ p {
 }
 
 .robin-id {
- width: 22px;
+ width: 26px;
  text-align: center;
  border-right: 1px solid black;
  padding: 5px;
 }
 
 #blank-space {
- width: 22px;
+ width: 26px;
  padding: 5px;
  color: #87CEEB;
 }
@@ -223,22 +233,33 @@ p {
 #robin-table {
  width: fit-content;
  display: flex;
- flex-wrap: wrap;
  border-left: 1px solid black;
  border-bottom: 1px solid black;
-
 }
 
 #robin-team {
- width: 22px;
+ width: 26px;
  text-align: center;
  border-right: 1px solid black;
  padding: 5px;
 }
 
 .robin-match {
- width: 22px;
+ width: 26px;
  text-align: center;
  padding: 5px;
  border-right: 1px solid black;
+}
+
+.robin-button {
+ border: none;
+ font: 16px "Times New Roman";
+ padding: 0px;
+ background-color: #87CEEB;
+ text-align: center;
+}
+
+.robin-button:hover {
+ border: 1px solid black;
+ transform: scale(2);
 }

@@ -64,7 +64,27 @@ export class BracketLogicService {
     }
    }
   }
-  return robin;
+
+  //Sorts the numbers in the right order
+  let sortRobin = [];
+  for (let o = 0; o < robin.length; o++) {
+   sortRobin.push(robin[o].sort((n1, n2) => n1 - n2));
+  }
+
+  //Creates the matches for each team.
+  var matches: Match[][] = [];
+  let round: Match[] = [];
+
+  for (let row = 0; row < sortRobin.length; row++) {
+   for (let team = 0; team < sortRobin[row].length; team++) {
+    round.push({ team1: data.team[row], team2: data.team[sortRobin[row][team] - 1] });
+   }
+   matches.push(round);
+   round = [];
+  }
+
+  //console.log(matches);
+  return matches;
  }
  singleElim(data: BracketData) {
   //Gets the order that the teams should be in.
