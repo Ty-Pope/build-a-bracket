@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../message.service';
 import { BracketDataService } from '../bracket-data.service';
 import { BracketData } from '../bracket-data';
@@ -25,25 +25,20 @@ export class BracketEditComponent implements OnInit {
 
  private groupArrCol: number = 0;
  private groupArrRow: number = 0;
-
  msg(txt: string) {
   this.messageService.add(txt);
  }
-
  inputGroupScore(teamOne: Team, teamTwo: Team, arrCol: number, arrRow: number) {
   this.teamOne = teamOne;
   this.teamTwo = teamTwo;
   this.groupArrCol = arrCol
   this.groupArrRow = arrRow;
  }
-
  cancel() {
   this.teamOne = { id: -1, name: '', wins: 0, loss: 0, tie: 0, groupOne: this.match, groupTwo: this.match };
   this.teamTwo = { id: -1, name: '', wins: 0, loss: 0, tie: 0, groupOne: this.match, groupTwo: this.match };
  }
-
  submit(scoreOne: number, scoreTwo: number) {
-
   if (this.bracket.format[0] == 'Group' || this.bracket.format[0] == 'Round Robin' || this.bracket.format[0] == 'Single Elimination' && this.bracket.finished == false) {
    this.teamOne.groupOne?.push({ team1: this.teamOne, team2: this.teamTwo, team1Score: scoreOne, team2Score: scoreTwo });
    this.teamTwo.groupOne?.push({ team1: this.teamOne, team2: this.teamTwo, team1Score: scoreOne, team2Score: scoreTwo });
@@ -178,7 +173,6 @@ export class BracketEditComponent implements OnInit {
    }
   }
  }
-
  inputRobinScore(arrCol: number, arrRow: number) {
   this.teamOne = this.bracket.team[arrCol];
   this.teamTwo = this.bracket.team[arrRow];
@@ -203,6 +197,7 @@ export class BracketEditComponent implements OnInit {
   for (let i = 0; i < tempGroup[column].length; i++) {
    teamArr.push(this.bracket.team[tempGroup[column][i] - 1]);
   }
+  let two = 0;
   for (let j = 0; j < teamArr.length; j++) {
    let pointRatio = 0
    if (this.bracket.finished == false) {

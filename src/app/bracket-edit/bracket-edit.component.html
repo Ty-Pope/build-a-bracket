@@ -80,29 +80,6 @@
   Next Stage</button>
  <h1>{{bracket.finished}}</h1>
 </div>
-<!--Input Team Score for Groups and round robin-->
-<div id="group-background" *ngIf="teamOne.name != ''"></div>
-<div id="group-inline" *ngIf="teamOne.name != ''">
- <div id=" group-game">
-  <div id="group-game-child">
-   <div id="group-game-input">
-    <div class="group-label">
-     <label for="group-one">{{teamOne.name}} score: </label>
-     <input id="group-one" #groupOneScore type="number" required>
-    </div>
-    <div class="group-label">
-     <label for="group-two">{{teamTwo.name}} score: </label>
-     <input id="group-two" #groupTwoScore type="number" required>
-    </div>
-   </div>
-   <p id="groupError" *ngIf=" groupError">{{groupError}}</p>
-   <div id="group-buttons">
-    <button (click)="cancel()">Cancel</button>
-    <button (click)="submit(+groupOneScore.value, +groupTwoScore.value)">Submit</button>
-   </div>
-  </div>
- </div>
-</div>
 <!--Round Robin-->
 <div class="group-main" *ngIf="bracket.format[0] == 'Round Robin'">
  <h1>Round Robin</h1>
@@ -135,4 +112,31 @@
   </div>
  </div>
  <h1>{{bracket.finished}}</h1>
+</div>
+<!--Input Team Score for Groups, round robin, and single elim-->
+<div id="group-background" *ngIf="teamOne.name != ''"></div>
+<div id="group-inline" *ngIf="teamOne.name != ''">
+ <div id=" group-game">
+  <div id="group-game-child">
+   <div id="group-game-input">
+    <div class="group-label">
+     <label for="group-one">{{teamOne.name}} score: </label>
+     <input id="group-one" #groupOneScore type="number"
+      oninput="if (this.value.length > this.maxLength){ this.value = this.value.slice(0, this.maxLength);}"
+      maxlength="4" required>
+    </div>
+    <div class="group-label">
+     <label for="group-two">{{teamTwo.name}} score: </label>
+     <input id="group-two" #groupTwoScore type="number"
+      oninput="if (this.value.length > this.maxLength){ this.value = this.value.slice(0, this.maxLength);}"
+      maxlength="4" required>
+    </div>
+   </div>
+   <p id="groupError" *ngIf=" groupError">{{groupError}}</p>
+   <div id="group-buttons">
+    <button (click)="cancel()">Cancel</button>
+    <button (click)="submit(+groupOneScore.value, +groupTwoScore.value)">Submit</button>
+   </div>
+  </div>
+ </div>
 </div>

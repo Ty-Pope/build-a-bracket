@@ -1,8 +1,7 @@
-Make groups work at 400%
-Same with RR
+Make groups, RR work at 400%
 Set focus on input div when button is clicked in groups, robin, and single elim
 Have nav close wherever clicked.
 Group changes based off seeding
+    Almost there just need tiebreaker (point ratio) to work
 Two teams for single elimination is broken
-fix group 12 teams into 12 groups
 group is dumb when you change score
