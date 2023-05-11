@@ -8,6 +8,6 @@ export interface Team {
  wins: number,
  loss: number,
  tie: number,
- groupOne?: Match[],
- groupTwo?: Match[],
+ groupOne: Match[],
+ groupTwo: Match[],
 }

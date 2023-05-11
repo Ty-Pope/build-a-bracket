@@ -16,6 +16,8 @@ export interface BracketData {
  amountRoundTwo: number,
  group: number,
  groupMatches: Array<any>,
- roundOne: Array<any>,
- roundTwo: Array<any>,
+ singleMatch: Array<any>,
+ robinMatch: Array<any>,
+ groupOrder: Array<any>,
+ finished: boolean,
 }

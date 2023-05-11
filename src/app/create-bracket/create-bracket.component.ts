@@ -30,8 +30,10 @@ export class CreateBracketComponent implements OnInit {
   amountRoundTwo: 0,
   group: 0,
   groupMatches: this.match,
-  roundOne: this.match,
-  roundTwo: this.match,
+  groupOrder: this.match,
+  singleMatch: this.match,
+  robinMatch: this.match,
+  finished: false,
  };
 
  numberError: string = '';
@@ -172,8 +174,7 @@ export class CreateBracketComponent implements OnInit {
     this.visibleArr[3] = false;
     this.visibleArr[4] = true;
    } else {
-    let match = this.bracketLogic.createBracket(this.formatJSON);
-    this.formatJSON.roundOne = match;
+    this.formatJSON = this.bracketLogic.createBracket(this.formatJSON);
     console.log(JSON.stringify(this.formatJSON));
     this.bracketData.updateBracket(this.formatJSON);
     this.visibleArr[3] = false;
@@ -193,31 +194,31 @@ export class CreateBracketComponent implements OnInit {
   return true;
  }
  groupStage(groupAmount: number) {
-  if (this.formatJSON.teamAmount % groupAmount == 0) {
+  console.log(this.formatJSON.teamAmount <= groupAmount);
+  if (this.formatJSON.teamAmount <= groupAmount) {
+   this.groupError = 'Enter a group number less than the team amount.';
+  } else if (this.formatJSON.teamAmount % groupAmount == 0) {
    this.formatJSON.group = groupAmount;
-   this.formatJSON.roundOne = this.bracketLogic.createBracket(this.formatJSON);
+   this.formatJSON = this.bracketLogic.createBracket(this.formatJSON);
 
    //Creates the matches of the groups.
    var matches: Match[][] = [];
    let round: Match[] = [];
-
-   for (let k = 0; k < this.formatJSON.roundOne.length; k++) {
-    for (let i = 0; i < this.formatJSON.roundOne[k].length; i++) {
-     for (let j = i + 1; j < this.formatJSON.roundOne[k].length; j++) {
-      round.push({ team1: this.formatJSON.roundOne[k][i], team2: this.formatJSON.roundOne[k][j] });
+   console.log(this.formatJSON.groupOrder);
+   for (let k = 0; k < this.formatJSON.groupOrder.length; k++) {
+    for (let i = 0; i < this.formatJSON.groupOrder[k].length; i++) {
+     for (let j = i + 1; j < this.formatJSON.groupOrder[k].length; j++) {
+      round.push({ team1: this.formatJSON.groupOrder[k][i], team2: this.formatJSON.groupOrder[k][j] });
      }
     }
     matches.push(round);
     round = [];
    }
    this.formatJSON.groupMatches = matches;
-   console.log(JSON.stringify(this.formatJSON));
    //Updates data of bracket
    this.bracketData.updateBracket(this.formatJSON);
    this.visibleArr[4] = false;
    this.visibleArr[5] = true;
-  } else if (this.formatJSON.teamAmount <= groupAmount) {
-   this.groupError = 'Enter a group number less than the team amount.';
   } else if (groupAmount < 2) {
    this.groupError = 'There needs to be at least 2 groups.'
   } else {

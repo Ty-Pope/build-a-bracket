@@ -1,35 +1,50 @@
 <!--Single Elimination-->
-<div class="elim-main" *ngIf="bracket.format[0] == 'Single Elimination'">
- <div class="rounds" *ngFor="let round of bracket.roundOne; let i = index">
-  <h1>Round {{i+1}}</h1>
-  <div class="matches" *ngFor="let match of round">
-   <div class="box" *ngIf="match.team1?.name !== 'qwertyasdfghzxcvbn$123'">
-    <p class="seed">{{match.team1?.seed}}</p>
-    <p>{{match.team1?.name}}</p>
-    <p *ngIf="match.team2?.name == null">Waiting on winner...</p>
-   </div>
-   <div class="box" *ngIf="match.team2?.name !== 'qwertyasdfghzxcvbn$123'">
-    <p class="seed">{{match.team2?.seed}}</p>
-    <p>{{match.team2?.name}}</p>
-    <p *ngIf="match.team2?.name == null">Waiting on winner...</p>
-   </div>
+<div id="single-center" *ngIf="bracket.format[0] == 'Single Elimination'">
+ <div id="tournament">
+  <div id="single-bar">
+   <ul class="round" *ngFor="let round of bracket.singleMatch; let i = index">
+    <div class="single-match" *ngFor="let match of round; let j = index">
+     <li class="spacer">&nbsp;</li>
+     <div
+      *ngIf="!(match?.team1?.name == 'qwertyasdfghzxcvbn$123') && !(match?.team2?.name == 'qwertyasdfghzxcvbn$123')">
+      <li *ngIf="match?.team1?.name != null" class="game game-top">
+       {{match.team1.name}}
+       <button class="single-button" (click)="inputSingleScore(i, j)" *ngIf="!match.team1Score">Enter Score</button>
+       <span>{{match.team1Score}}</span>
+      </li>
+      <li *ngIf="match?.team1?.name == null" class="game game-top">Waiting on winner...</li>
+     </div>
+     <li class="game game-spacer">&nbsp;</li>
+     <div
+      *ngIf="!(match?.team1?.name == 'qwertyasdfghzxcvbn$123') && !(match?.team2?.name == 'qwertyasdfghzxcvbn$123')">
+      <li *ngIf="match?.team2?.name" class="game game-bottom">
+       {{match.team2.name}}
+       <button class="single-button" (click)="inputSingleScore(i, j)" *ngIf="!match.team2Score">Enter Score</button>
+       <span>{{match.team2Score}}</span>
+      </li>
+      <li *ngIf="match?.team2?.name == null" class="game game-bottom">Waiting on winner...</li>
+     </div>
+     <li class="spacer">&nbsp;</li>
+    </div>
+   </ul>
+   <span *ngIf="!singleWinner" id="single-winner">Waiting on winner...</span>
+   <span *ngIf="singleWinner" id="single-winner">{{singleWinner}}</span>
   </div>
  </div>
 </div>
 <!--Double Elimination-->
 <div class="elim-main" *ngIf="bracket.format[0] == 'Double Elimination'">
  <p>{{bracketString}}</p>
- <div class="rounds" *ngFor="let round of bracket.roundOne; let i = index">
+ <div class="rounds" *ngFor="let round of bracket.singleMatch; let i = index">
   <h1>Round {{i+1}}</h1>
  </div>
 </div>
 
 <!--Groups-->
 <div class="group-main" *ngIf="bracket.format[0] == 'Group'">
- <p>{{bracketString}}</p>
  <h2>Groups</h2>
  <div id="table">
-  <div class="column" *ngFor="let column of bracket.roundOne; let i = index">
+  <div class="column" *ngFor="let column of bracket.groupOrder; let i = index">
    <h3>Group {{i + 1}}</h3>
    <div id="teams">
     <div class="group-header">
@@ -38,7 +53,7 @@
      <p class="group-score">L</p>
      <p class="group-score">T</p>
     </div>
-    <div class="group-team" *ngFor="let team of bracket.roundOne[i]">
+    <div class="group-team" *ngFor="let team of bracket.groupOrder[i]">
      <p class="team-individual">{{bracket.team[team - 1].name}}</p>
      <p class="team-score">{{bracket.team[team - 1].wins}}</p>
      <p class="team-score">{{bracket.team[team - 1].loss}}</p>
@@ -55,14 +70,17 @@
     <button class="group-input" *ngIf="!match.team1Score"
      (click)="inputGroupScore(bracket.team[match.team1 - 1], bracket.team[match.team2 - 1], j, i)">Add
      Score</button>
-    <div class="group-complete" *ngIf="match.team1Score">{{match.team1Score}}-{{match.team2Score}}</div>
+    <button class="group-input" *ngIf="match.team1Score"
+     (click)="inputGroupScore(bracket.team[match.team1 - 1], bracket.team[match.team2 - 1], j, i)">{{match.team1Score}}-{{match.team2Score}}</button>
     <p>{{bracket.team[match.team2 - 1].name}}</p>
    </div>
   </div>
  </div>
  <button id="group-finish" *ngIf="groupFinished && bracket.formatAmount > 1 && bracket.format[1] != 'Group'">Generate
   Next Stage</button>
+ <h1>{{bracket.finished}}</h1>
 </div>
+<!--Input Team Score for Groups and round robin-->
 <div id="group-background" *ngIf="teamOne.name != ''"></div>
 <div id="group-inline" *ngIf="teamOne.name != ''">
  <div id=" group-game">
@@ -70,13 +88,11 @@
    <div id="group-game-input">
     <div class="group-label">
      <label for="group-one">{{teamOne.name}} score: </label>
-     <input id="group-one" #groupOneScore type="number" required
-      onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+     <input id="group-one" #groupOneScore type="number" required>
     </div>
     <div class="group-label">
      <label for="group-two">{{teamTwo.name}} score: </label>
-     <input id="group-two" #groupTwoScore type="number" required
-      onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+     <input id="group-two" #groupTwoScore type="number" required>
     </div>
    </div>
    <p id="groupError" *ngIf=" groupError">{{groupError}}</p>
@@ -88,25 +104,35 @@
  </div>
 </div>
 <!--Round Robin-->
-<p>{{bracketString}}</p>
 <div class="group-main" *ngIf="bracket.format[0] == 'Round Robin'">
- <h2>Round Robin</h2>
- <div id="robin-head">
-  <div class="robin-id">
-  </div>
-  <div class="robin-id" *ngFor="let team of bracket.roundOne; let k = index">
-   {{k+1}}
+ <h1>Round Robin</h1>
+ <div id="robin-table">
+  <div id="teams">
+   <div class="group-header">
+    <p class="team-individual">Name</p>
+    <p class="group-score">W</p>
+    <p class="group-score">L</p>
+    <p class="group-score">T</p>
+   </div>
+   <div class="group-team" *ngFor="let column of bracket.robinMatch; let i = index">
+    <p class="team-individual">{{bracket.team[i].name}}</p>
+    <p class="team-score">{{bracket.team[i].wins}}</p>
+    <p class="team-score">{{bracket.team[i].loss}}</p>
+    <p class="team-score">{{bracket.team[i].tie}}</p>
+   </div>
   </div>
  </div>
- <div id="robin-parent-table">
-  <div id="robin-table" *ngFor="let matches of bracket.roundOne; let i = index">
-   <div id="robin-team">{{i+1}}</div>
-   <div class="robin-match" *ngFor="let team of bracket.roundOne; let j = index">
-    <div *ngIf="i == j">{{team[11]}}</div>
-    <div *ngIf="i != j">
-     <button *ngIf="team[i].team1.name" class=" robin-button" (click)="inputRobinScore(i, j)">0-0</button>
+ <div class="robin-teams" *ngFor="let team of bracket.robinMatch; let i = index">
+  <h2>{{team[i].team1.name}} Matches</h2>
+  <div class="robin-table">
+   <div *ngFor="let match of team; let j = index">
+    <div class="robin-matches" *ngIf="i != j">
+     <p>{{match.team2.name}}</p>
+     <button *ngIf="!match.team1Score" (click)="inputRobinScore(i, j)">Score</button>
+     <button *ngIf="match.team1Score" (click)="inputRobinScore(i, j)">{{match.team1Score}}-{{match.team2Score}}</button>
     </div>
    </div>
   </div>
  </div>
+ <h1>{{bracket.finished}}</h1>
 </div>
