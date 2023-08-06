@@ -38,7 +38,22 @@ export class BracketEditComponent implements OnInit {
   this.teamOne = { id: -1, name: '', wins: 0, loss: 0, tie: 0, groupOne: this.match, groupTwo: this.match };
   this.teamTwo = { id: -1, name: '', wins: 0, loss: 0, tie: 0, groupOne: this.match, groupTwo: this.match };
  }
+
+ matchDone() {
+  let idOne = -1;
+  let idTwo = -2;
+  for (let i = 0; i < this.teamOne.groupOne.length; i++) {
+   let idOne = this.teamTwo.id;
+   let idTwo = this.teamOne.groupOne[i].team2?.id;
+   if (!idOne == !idTwo) {
+    return true;
+   }
+  }
+  return false
+ }
+
  submit(scoreOne: number, scoreTwo: number) {
+  let inputAgain = this.matchDone();
   if (this.bracket.format[0] == 'Group' || this.bracket.format[0] == 'Round Robin' || this.bracket.format[0] == 'Single Elimination' && this.bracket.finished == false) {
    this.teamOne.groupOne?.push({ team1: this.teamOne, team2: this.teamTwo, team1Score: scoreOne, team2Score: scoreTwo });
    this.teamTwo.groupOne?.push({ team1: this.teamOne, team2: this.teamTwo, team1Score: scoreOne, team2Score: scoreTwo });
@@ -53,6 +68,8 @@ export class BracketEditComponent implements OnInit {
   } else {
    this.groupError = '';
    //Checks if there is already scores inputed
+   
+
    try {
     //Update general teams
     if (scoreOne > scoreTwo) {
@@ -95,8 +112,6 @@ export class BracketEditComponent implements OnInit {
       this.teamTwo.groupOne?.push({ team1: this.teamOne, team2: this.teamTwo, team1Score: scoreOne, team2Score: scoreTwo });
       this.bracket.robinMatch[this.groupArrCol][this.groupArrRow].team1Score = scoreOne;
       this.bracket.robinMatch[this.groupArrCol][this.groupArrRow].team2Score = scoreTwo;
-      this.bracket.robinMatch[this.groupArrRow][this.groupArrCol].team1Score = scoreOne;
-      this.bracket.robinMatch[this.groupArrRow][this.groupArrCol].team2Score = scoreTwo;
 
       let finished = true;
       for (let i = 0; i < this.bracket.robinMatch.length; i++) {
@@ -119,8 +134,6 @@ export class BracketEditComponent implements OnInit {
       this.teamTwo.groupTwo?.push({ team1: this.teamOne, team2: this.teamTwo, team1Score: scoreOne, team2Score: scoreTwo });
       this.bracket.robinMatch[this.groupArrCol][this.groupArrRow].team1Score = scoreOne;
       this.bracket.robinMatch[this.groupArrCol][this.groupArrRow].team2Score = scoreTwo;
-      this.bracket.robinMatch[this.groupArrRow][this.groupArrCol].team1Score = scoreOne;
-      this.bracket.robinMatch[this.groupArrRow][this.groupArrCol].team2Score = scoreTwo;
 
       let finished = true;
       for (let i = 0; i < this.bracket.robinMatch.length; i++) {
@@ -167,11 +180,11 @@ export class BracketEditComponent implements OnInit {
       }
      }
     }
-    //Clears teams
-    this.teamOne = { id: -1, name: '', wins: 0, loss: 0, tie: 0, groupOne: this.match, groupTwo: this.match };
-    this.teamTwo = { id: -1, name: '', wins: 0, loss: 0, tie: 0, groupOne: this.match, groupTwo: this.match };
    }
   }
+  //Clears teams
+  this.teamOne = { id: -1, name: '', wins: 0, loss: 0, tie: 0, groupOne: this.match, groupTwo: this.match };
+  this.teamTwo = { id: -1, name: '', wins: 0, loss: 0, tie: 0, groupOne: this.match, groupTwo: this.match };
  }
  inputRobinScore(arrCol: number, arrRow: number) {
   this.teamOne = this.bracket.team[arrCol];
@@ -189,6 +202,7 @@ export class BracketEditComponent implements OnInit {
    this.groupArrRow = arrRow;
   }
  }
+ //Updates the group table view so that winner is displayed on the top
  updateGroupTable(column: number) {
   let tempGroup = this.bracket.groupOrder;
   let teamArr = [];
@@ -197,7 +211,6 @@ export class BracketEditComponent implements OnInit {
   for (let i = 0; i < tempGroup[column].length; i++) {
    teamArr.push(this.bracket.team[tempGroup[column][i] - 1]);
   }
-  let two = 0;
   for (let j = 0; j < teamArr.length; j++) {
    let pointRatio = 0
    if (this.bracket.finished == false) {
@@ -212,6 +225,18 @@ export class BracketEditComponent implements OnInit {
    teamPoints.push({ teamID: teamArr[j].id, teamRatio: teamArr[j].wins - teamArr[j].loss, pointRatio: pointRatio })
   }
   console.log(teamPoints);
+  let winID = teamPoints[0].teamID;
+  let pointRatio = teamPoints[0].teamRatio;
+  for (let j = 0; j < teamPoints.length; j++) {
+   if (teamPoints[j].teamRatio > winID) {
+    winID = teamPoints[j].teamID;
+   } else if (teamPoints[j].teamRatio == winID) {
+    if (pointRatio < teamPoints[j].pointRatio) {
+     pointRatio = teamPoints[j].pointRatio;
+     winID = teamPoints[j].teamID;
+    }
+   }
+  }
   return tempGroup;
  }
 }
